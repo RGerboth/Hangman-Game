@@ -1,0 +1,40 @@
+<!-- HANGMAN game index -->
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  
+  <title>The Hangman Game</title>
+  
+</head>
+
+<body>
+
+  <div id="container">
+      <div id="masthead">        
+        <h1>Welcome to Hangman</h1>
+        <h2>Star Trek edition</h2>
+      </div>
+      <div id="image">
+        <img id="picture" src="images/StarshipEnterprise.jpg" alt="The Starship Enterprise">
+      </div>
+    <div id="game">
+      <p><span id="statusMessage">Status Message</span></p>
+      <p><span id="message"></span></p>
+      <p>Wins: <span id="winsCounter">0</span></p>
+      <p>Guesses Left: <span id="guessesLeft"></span></p>
+      <p><span id="displayWord"></span></p>
+      <p>Last Winning Word:<br><span id="lastWinningWord"></span></p>
+  </div>
+
+  <script type="text/javascript" src="hangman.js"></script>
+
+</body>
+
+</html>
