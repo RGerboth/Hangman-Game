@@ -75,8 +75,8 @@
             words.splice(currentWordIndex, 1);
 
         } else {
-            document.getElementById("statusMessage").innerHTML = "Dammit Jim, I'm a doctor, not";
-            document.getElementById("message").innerHTML = "a bricklayer. Play again.";
+            document.getElementById("statusMessage").innerHTML = "I'm not a magician, Spock...";
+            document.getElementById("message").innerHTML = "Press any key to play again";
             document.getElementById("picture").src = "images/HesDeadJim.jpg";
         }
         newWord();
