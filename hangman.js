@@ -75,8 +75,8 @@
             words.splice(currentWordIndex, 1);
 
         } else {
-            document.getElementById("statusMessage").innerHTML = "I'm a doctor, Jim, I'm Busy!";
-            document.getElementById("message").innerHTML = "Press any key to play again";
+            document.getElementById("statusMessage").innerHTML = "Dammit Jim, I'm a doctor, not";
+            document.getElementById("message").innerHTML = "a bricklayer. Play again.";
             document.getElementById("picture").src = "images/HesDeadJim.jpg";
         }
         newWord();
@@ -98,6 +98,7 @@
         if (newGame) {
             newGame = false;
             document.getElementById("picture").src = "images/StarshipEnterprise.jpg";
+            document.getElementById("message").innerHTML = "Press any key to start";
         }
 
         document.getElementById("statusMessage").innerHTML = "Good Luck!";
