@@ -6,8 +6,8 @@
     var lettersGuessedSoFar = [];
     var currentWord = "text";
     var displayWord = ["_ "];
-    var placeHolder = "_ "
-    var alphabet = "abcdefghijklmnopqrstuvwxyz"
+    var placeHolder = "_ ";
+    var alphabet = "abcdefghijklmnopqrstuvwxyz";
     var playerChoice = "text";
     var outcome = true;
     var lastWinningWord = "text";
@@ -113,6 +113,7 @@
             if (lettersGuessedSoFar.indexOf(playerChoice) === -1) {
                 console.log ("new letter not guessed before")
                 lettersGuessedSoFar.push(playerChoice);
+                document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
                 guessesLeft--;
                 //check if this letter is in the current word, match to 
                 //individual placeholder letters if so
