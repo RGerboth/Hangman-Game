@@ -32,6 +32,7 @@
         "warp",
         "torpedo",
         "phaser", 
+        "tribble",
         "tricorder"
         ];
 
@@ -44,6 +45,7 @@
         lettersGuessedSoFar = [];
         lettersHit = 0;
 
+        document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
         //select random word from the array of available words
         currentWordIndex = [Math.floor(Math.random() * words.length)];
         console.log("currentWordIndex: " + currentWordIndex + ", word: " + words[currentWordIndex]);
@@ -112,9 +114,6 @@
             // and decrement the guessess counter. 
             if (lettersGuessedSoFar.indexOf(playerChoice) === -1) {
                 console.log ("new letter not guessed before")
-                lettersGuessedSoFar.push(playerChoice);
-                document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
-                guessesLeft--;
                 //check if this letter is in the current word, match to 
                 //individual placeholder letters if so
                 if (currentWord.indexOf(playerChoice) > -1) {
@@ -130,6 +129,9 @@
                     }
 
                 } else {
+                    lettersGuessedSoFar.push(playerChoice);
+                    guessesLeft--;
+                    document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
                     console.log("letter not found " + playerChoice)
                 }
 
