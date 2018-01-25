@@ -36,7 +36,7 @@
         "tricorder"
         ];
 
-    // randommly chooses a word from the options array and loads into 
+    // randommly chooses a word from the options array, loads into 
     // currentWord and intializes displayWord with the correct number of spaces. 
     function newWord() {
         guessesLeft = 12;
@@ -75,6 +75,7 @@
 
             // removes the winning word from the list of available challenge words
             words.splice(currentWordIndex, 1);
+            console.log(words);
 
         } else {
             document.getElementById("statusMessage").innerHTML = "I'm not a magician, Spock...";
@@ -119,7 +120,6 @@
                 if (currentWord.indexOf(playerChoice) > -1) {
                     console.log("letter found " + playerChoice)
                     console.log(currentWord.charAt(0))
-                    // displayWord.replaceAt(i, playerChoice);
                     for (i = 0; i < currentWord.length; i++) {
                         if (playerChoice == currentWord.charAt(i)) {
                             console.log("Index: " + i + currentWord.charAt(i));
@@ -139,12 +139,12 @@
                 console.log("letter guessed before, try again")
             }
         }
-        // if all letters are matched, winner
+        // if all letters are matched, win
         if (lettersHit == currentWord.length) {
             outcome = true;
             gameOver(outcome);
         }
-        // if player runs out of guesses, loser
+        // if player runs out of guesses, loss
         if (guessesLeft === 0) {
             outcome = false;
             gameOver(outcome);
