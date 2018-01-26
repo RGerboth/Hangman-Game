@@ -1,7 +1,7 @@
 // Hangman game js
 
     var wins = 0;
-    var lettersHit = 0;
+    // var lettersHit = 0;
     var guessesLeft = 12;
     var lettersGuessedSoFar = [];
     var currentWord = "text";
@@ -43,8 +43,8 @@
         currentWord = "";
         displayWord = ["_ "];
         lettersGuessedSoFar = [];
-        lettersHit = 0;
 
+        console.log("------- NEW WORD --------");
         document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
         //select random word from the array of available words
         currentWordIndex = [Math.floor(Math.random() * words.length)];
@@ -123,7 +123,6 @@
                     for (i = 0; i < currentWord.length; i++) {
                         if (playerChoice == currentWord.charAt(i)) {
                             console.log("Index: " + i + currentWord.charAt(i));
-                            lettersHit++;
                             displayWord[i] = playerChoice.toUpperCase();
                         }
                     }
@@ -139,8 +138,8 @@
                 console.log("letter guessed before, try again")
             }
         }
-        // if all letters are matched, win
-        if (lettersHit == currentWord.length) {
+        // if all letters are matched, winner
+        if (displayWord.indexOf("_ " ) == -1) {
             outcome = true;
             gameOver(outcome);
         }
@@ -154,7 +153,6 @@
 
         console.log(currentWord);
         console.log(displayWord.join(" "));
-        console.log("Letters hit: " + lettersHit)
         console.log("Players Word length: " + currentWord.length)
         console.log("Players last choice: " + playerChoice);
         console.log("Letters so far: " + lettersGuessedSoFar);
