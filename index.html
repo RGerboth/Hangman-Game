@@ -16,18 +16,10 @@
 
 <body>
 
-  <audio id="audioBackground">
-    <source src="http://www.trekcore.com/audio/background/tos_bridge_2.mp3" type="audio/mp3">
-  </audio>
-
-  <audio id="audioEffect">
-    <!-- <source src="http://www.trekcore.com/audio/background/tos_bridge_2.mp3" type="audio/mp3"> -->
-  </audio>
-
   <div id="container">
-      <div id="masthead">        
-        <h1>Welcome to Hangman</h1>
-        <h2>Star Trek Edition</h2>
+    <div id="masthead">        
+      <h1>Welcome to Hangman</h1>
+      <h2>Star Trek Edition</h2>
       </div>
       <div id="image">
         <img id="picture" src="images/StarshipEnterprise.jpg" alt="The Starship Enterprise">
@@ -42,6 +34,8 @@
       <p>Last Winning Word<br><span id="lastWinningWord"></span></p>
   </div>
 
+  <script type="text/javascript" src="wordlist.js"></script>
+  
   <script type="text/javascript" src="hangman.js"></script>
 
 </body>

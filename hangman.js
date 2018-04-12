@@ -1,160 +1,130 @@
 // Hangman game js
 
-    var wins = 0;
-    // var lettersHit = 0;
-    var guessesLeft = 12;
-    var lettersGuessedSoFar = [];
-    var currentWord = "text";
-    var displayWord = ["_ "];
-    var placeHolder = "_ ";
-    var alphabet = "abcdefghijklmnopqrstuvwxyz";
-    var playerChoice = "text";
-    var outcome = true;
-    var lastWinningWord = "text";
-    var currentWordIndex = 0;
-    var newGame = true;
+let wins = 0;
+let guessesLeft = 12;
+let lettersGuessedSoFar = [];
+let currentWord = "";
+let displayWord = ["_ "];
+const placeHolder = "_ ";
+const alphabet = "abcdefghijklmnopqrstuvwxyz";
+let playerChoice = "";
+let outcome = true;
+let lastWinningWord = "";
+let currentWordIndex = 0;
+let newGame = true;
 
-    // array of all of the challenge options 
-    var words = [
-        "klingon",
-        "romulan",
-        "sulu",
-        "spock", 
-        "uhura",
-        "kirk", 
-        "mccoy", 
-        "scotty",
-        "chekhov",
-        "enterprise",
-        "starfleet",
-        "shuttle",
-        "transporter",
-        "warp",
-        "torpedo",
-        "phaser", 
-        "tribble",
-        "tricorder"
-        ];
+// randommly chooses a word from the options array, loads into 
+// currentWord and intializes displayWord with the correct number of spaces. 
+function newWord() {
+  // check to see if any challenge words remain
+  guessesLeft = 12;
+  currentWord = "";
+  displayWord = ["_ "];
+  lettersGuessedSoFar = [];
+  console.log("------- NEW WORD --------");
+  document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
+  //select random word from the array of available words
+  currentWordIndex = [Math.floor(Math.random() * words.length)];
+  currentWord = words[currentWordIndex];
+  //fill in the display word with placeholder for each letter 
+  for (let i = 1; i < currentWord.length; i++) {
+    displayWord.push(placeHolder);
+  }
+  document.getElementById("guessesLeft").innerHTML = guessesLeft;
+ }
 
-    // randommly chooses a word from the options array, loads into 
-    // currentWord and intializes displayWord with the correct number of spaces. 
-    function newWord() {
-        guessesLeft = 12;
-        currentWord = "";
-        displayWord = ["_ "];
-        lettersGuessedSoFar = [];
+// display win/loss message, set up new game
+function gameOver(outcome) {
+  newGame = true;
+  if (outcome) {
+    wins++;
+    document.getElementById("winsCounter").innerHTML = wins;
+    lastWinningWord = currentWord.toUpperCase();
+    // removes the winning word from the list of available challenge words
+    words.splice(currentWordIndex, 1);
+    document.getElementById("lastWinningWord").innerHTML = lastWinningWord;
+    document.getElementById("picture").src = "images/CaptainKirkApproves.jpg";
+    // if there are no more challenge words, final message, else...
+    if (!words.length) {
+      document.getElementById("statusMessage").innerHTML = "You have gussed all the";
+      document.getElementById("message").innerHTML = "words. Congratulations!";
+      document.getElementById("displayWord").innerHTML = "";
+    } else {
+      document.getElementById("statusMessage").innerHTML = "Saurian brandy, anyone?";
+      document.getElementById("message").innerHTML = "Press any key to play again";
+    }
 
-        console.log("------- NEW WORD --------");
+  } else {
+    document.getElementById("statusMessage").innerHTML = "I'm not a magician, Spock...";
+    document.getElementById("message").innerHTML = "Press any key to play again";
+    document.getElementById("picture").src = "images/HesDeadJim.jpg";
+  }
+
+  newWord();
+
+}
+
+// Initial welcome message 
+document.getElementById("statusMessage").innerHTML = "New Game";
+document.getElementById("message").innerHTML = "Pick any letter to start";
+
+// set up first game/word
+newWord();
+document.getElementById("displayWord").innerHTML = displayWord.join(" ");
+
+// // This function runs every time the player presses a key.
+document.onkeyup = function(event) {
+  // reset the picture
+  if (newGame) {
+    newGame = false;
+    document.getElementById("picture").src = "images/StarshipEnterprise.jpg";
+    document.getElementById("message").innerHTML = "Pick any letter to start";
+  }
+
+  document.getElementById("statusMessage").innerHTML = "Good Luck!";
+
+  // Determines which key was pressed, forced to lower case.
+  let playerChoice = event.key.toLowerCase();
+
+  // make sure the player chose a letter a-z, if true continue
+  if ((alphabet.indexOf(playerChoice)) > -1) {
+    // check to see if this letter guessed before, add to list if new
+    // and decrement the guessess counter. 
+    if (lettersGuessedSoFar.indexOf(playerChoice) === -1) {
+      //check if this letter is in the current word, match to 
+      //individual placeholder letters if so
+      if (currentWord.indexOf(playerChoice) > -1) {
+        document.getElementById("message").innerHTML = "Correct guess";
+        for (let i = 0; i < currentWord.length; i++) {
+          if (playerChoice == currentWord.charAt(i)) {
+            console.log("Index: " + i + currentWord.charAt(i));
+            displayWord[i] = playerChoice.toUpperCase();
+          }
+      }
+      } else {
+        lettersGuessedSoFar.push(playerChoice);
+        guessesLeft--;
         document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
-        //select random word from the array of available words
-        currentWordIndex = [Math.floor(Math.random() * words.length)];
-        console.log("currentWordIndex: " + currentWordIndex + ", word: " + words[currentWordIndex]);
-        currentWord = words[currentWordIndex];
-        console.log("currentWord" + currentWord);
-
-        //fill in the display word with placeholder for each letter 
-        for (i = 1; i < currentWord.length; i++) {
-            displayWord.push(placeHolder);
-            }
-        document.getElementById("guessesLeft").innerHTML = guessesLeft;
+        document.getElementById("message").innerHTML = "Letter not found";
+      }
+    } else {
+      document.getElementById("message").innerHTML = "Letter guessed before";
     }
+  }
 
-    // display win/loss message, set up new game
-    function gameOver(outcome) {
-        newGame = true;
-        if (outcome) {
-            wins++;
-            lastWinningWord = currentWord.toUpperCase();
-            console.log("last winning word: " + lastWinningWord);
-            document.getElementById("statusMessage").innerHTML = "Saurian brandy, anyone?";
-            document.getElementById("message").innerHTML = "Press any key to play again";
-            document.getElementById("winsCounter").innerHTML = wins;
-            document.getElementById("lastWinningWord").innerHTML = lastWinningWord;
-            document.getElementById("picture").src = "images/CaptainKirkApproves.jpg";
-            console.log("word index: " + currentWordIndex)
+  // if all letters are matched, winner
+  if (displayWord.indexOf("_ " ) == -1) {
+    outcome = true;
+    gameOver(outcome);
+  }
 
-            // removes the winning word from the list of available challenge words
-            words.splice(currentWordIndex, 1);
-            console.log(words);
+  // if player runs out of guesses, loss
+  if (guessesLeft === 0) {
+    outcome = false;
+    gameOver(outcome);
+  }
 
-        } else {
-            document.getElementById("statusMessage").innerHTML = "I'm not a magician, Spock...";
-            document.getElementById("message").innerHTML = "Press any key to play again";
-            document.getElementById("picture").src = "images/HesDeadJim.jpg";
-        }
-        newWord();
+  document.getElementById("displayWord").innerHTML = displayWord.join(" ");
+  document.getElementById("guessesLeft").innerHTML = guessesLeft;
 
-    }
-
-    // Initial welcome message 
-    document.getElementById("statusMessage").innerHTML = "New Game";
-    document.getElementById("message").innerHTML = "Press any key to start";
-
-    // set up first game/word
-    newWord();
-    document.getElementById("displayWord").innerHTML = displayWord.join(" ");
-
-    // // This function runs every time the player presses a key.
-    document.onkeyup = function(event) {
-
-        // reset the picture
-        if (newGame) {
-            newGame = false;
-            document.getElementById("picture").src = "images/StarshipEnterprise.jpg";
-            document.getElementById("message").innerHTML = "Press any key to start";
-        }
-
-        document.getElementById("statusMessage").innerHTML = "Good Luck!";
-
-        // Determines which key was pressed, forced to lower case.
-        var playerChoice = event.key.toLowerCase();
-
-        // make sure the player chose a letter a-z, if true continue
-        if ((alphabet.indexOf(playerChoice)) > -1) {
-            // check to see if this letter guessed before, add to list if new
-            // and decrement the guessess counter. 
-            if (lettersGuessedSoFar.indexOf(playerChoice) === -1) {
-                console.log ("new letter not guessed before")
-                //check if this letter is in the current word, match to 
-                //individual placeholder letters if so
-                if (currentWord.indexOf(playerChoice) > -1) {
-                    console.log("letter found " + playerChoice)
-                    console.log(currentWord.charAt(0))
-                    for (i = 0; i < currentWord.length; i++) {
-                        if (playerChoice == currentWord.charAt(i)) {
-                            console.log("Index: " + i + currentWord.charAt(i));
-                            displayWord[i] = playerChoice.toUpperCase();
-                        }
-                    }
-
-                } else {
-                    lettersGuessedSoFar.push(playerChoice);
-                    guessesLeft--;
-                    document.getElementById("lettersGuessedSoFar").innerHTML = lettersGuessedSoFar.toString();
-                    console.log("letter not found " + playerChoice)
-                }
-
-            } else {
-                console.log("letter guessed before, try again")
-            }
-        }
-        // if all letters are matched, winner
-        if (displayWord.indexOf("_ " ) == -1) {
-            outcome = true;
-            gameOver(outcome);
-        }
-        // if player runs out of guesses, loss
-        if (guessesLeft === 0) {
-            outcome = false;
-            gameOver(outcome);
-        }
-        document.getElementById("displayWord").innerHTML = displayWord.join(" ");
-        document.getElementById("guessesLeft").innerHTML = guessesLeft;
-
-        console.log(currentWord);
-        console.log(displayWord.join(" "));
-        console.log("Players Word length: " + currentWord.length)
-        console.log("Players last choice: " + playerChoice);
-        console.log("Letters so far: " + lettersGuessedSoFar);
-
-    };
+};
